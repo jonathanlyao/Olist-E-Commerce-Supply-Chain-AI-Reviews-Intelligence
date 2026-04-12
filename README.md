@@ -87,12 +87,11 @@ The data was modeled in dbt using a Kimball-style Star Schema optimized for OLAP
 ## 7. Visualizations & Graph Network
 
 ### Executive Supply Chain Radar (Power BI)
-*(Insert your Power BI full-screen screenshot here: ![Olist E-commerce   AI Review BI Dashboard](https://github.com/user-attachments/assets/10479832-4dfa-4f16-958c-6f7c291e2137)
-*
+*Power BI Dashboard![Olist E-commerce   AI Review BI Dashboard](https://github.com/user-attachments/assets/10479832-4dfa-4f16-958c-6f7c291e2137)*
 > **Insight:** Implemented a Custom Diverging Color Scale anchored to the platform's historical average sentiment (6.31). This eliminated "map wash-out" from outliers and clearly exposed the critical delivery failure zones in northern Brazil.
 
 ### Fraud Ring "Starburst" Topology (Neo4j)
-*(Insert your Neo4j Graph screenshot here: ![neo4j fraud detection](https://github.com/user-attachments/assets/9a44a485-dca8-4261-a634-fe7f2d9eebf5)*
+*![neo4j fraud detection](https://github.com/user-attachments/assets/9a44a485-dca8-4261-a634-fe7f2d9eebf5)*
 > **Insight:** Discovered coordinated review manipulation. The Cypher query successfully isolated bot clusters where a single customer generated multiple 10/10 reviews that exclusively converged on a single target seller.
 
 ---
