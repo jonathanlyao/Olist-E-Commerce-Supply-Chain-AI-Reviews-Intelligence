@@ -1,1 +1,18 @@
+version: '3.8'
+
+services:
+  # Simulate upper stream database (OLTP)
+  olist_postgres: 
+    image: postgres:15
+    container_name: olist_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: XXXXXX # Sensitive information
+      POSTGRES_PASSWORD: XXXXXXX # Sensitive information
+      POSTGRES_DB: olist_db
+    ports:
+      - "55433:5432" # Set up the port 55433 to project default port 5432 
+    volumes: 
+      - olist_pg_data:/var/lib/postgresql/data # Set up the local database to the container, for batch later on
+      - ./data/raw:/data/raw
 
