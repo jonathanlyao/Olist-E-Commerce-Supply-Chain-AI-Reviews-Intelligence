@@ -41,21 +41,21 @@ Olist, the largest department store in Brazilian marketplaces, connects small bu
     
 ## 4. Tech Stack Justification
 
-### Extraction & Orchestration (Python + Docker + Prefect)
+### Python + Docker + Prefect -> Extraction & Orchestration
 * **Why Prefect?** Instead of relying on fragile cron jobs or heavyweight Airflow setups, **Prefect** was utilized as the control plane. Prefect manages the Directed Acyclic Graphs (DAGs) for our extraction scripts. It provides out-of-the-box `@task(retries=3)` decorators to handle transient network failures during AWS S3 uploads, automatic state tracking, and UI-based monitoring.
 * **Docker:** The Python extraction scripts are fully containerized. This ensures absolute dependency isolation, meaning the Prefect flows can be executed consistently across local machines or cloud workers without "it works on my machine" issues.
 
-### Data Lake & Data Warehouse (AWS S3 + Snowflake)
+### AWS S3 + Snowflake -> Data Lake & Data Warehouse
 * **AWS S3:** Serves as the raw data lake. Extremely cost-effective for landing bulk CSVs.
 * **Snowflake:** Acts as the computational heart of the project. Data is ingested from S3 via Snowflake `EXTERNAL STAGES`. Snowflake's decoupled storage and compute allowed for zero-copy cloning and highly efficient query scaling.
 
-### AI Enrichment (Snowflake Cortex LLM)
+### Snowflake Cortex LLM -> AI Inference
 * Rather than setting up external API calls (e.g., OpenAI) which incur heavy network latency and data governance risks, I utilized **Snowflake Cortex**. This allowed me to run LLM inference *natively* where the data resides, passing 100k+ Portuguese reviews through a prompt to output normalized integer sentiment scores (1-10).
 
-### Transformation (dbt)
+### dbt (data build tool) -> Transformation
 * Replaced traditional stored procedures with **dbt (data build tool)**. Implemented modular SQL modeling, transforming `RAW` tables into `STAGING`, and ultimately into `FACT` and `DIMENSION` tables. Implemented schema tests (`not_null`, `unique`) to guarantee data integrity before visualization.
 
-### Graph Analytics (Neo4j) & BI (Power BI)
+### neo4j & Power BI -> Graph Analytics & Visualization
 * **Neo4j:** Traditional relational databases (SQL) fail catastrophically via Cartesian explosions when trying to map deep N-to-N relationships (e.g., Fraud Rings). Neo4j's index-free adjacency allowed for O(1) traversal to expose review syndicates.
 * **Power BI:** Built the semantic layer and interactive executive dashboard.
 
