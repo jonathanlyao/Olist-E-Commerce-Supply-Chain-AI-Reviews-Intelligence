@@ -119,10 +119,11 @@ The data was modeled in dbt using a Kimball-style Star Schema optimized for OLAP
 * Power BI Desktop
 
 ### Steps
-1. **Clone the repo:**
-   ```bash
-   git clone [https://github.com/YourUsername/olist-supply-chain-ai.git](https://github.com/YourUsername/olist-supply-chain-ai.git)
-   cd olist-supply-chain-ai
+
+**1. Clone the repo:**
+```bash
+git clone [https://github.com/YourUsername/olist-supply-chain-ai.git](https://github.com/YourUsername/olist-supply-chain-ai.git)
+cd olist-supply-chain-ai
 
 2. Setup Prefect & Docker:
 
