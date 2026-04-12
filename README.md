@@ -37,29 +37,8 @@ Olist, the largest department store in Brazilian marketplaces, connects small bu
 ---
 
 ## 3. Architecture  
-📁 olist-supply-chain-ai
-│
-├── 📁 data_ingestion           # For Python extraction logs & Dockerfile
-│   ├── main.py
-│   └── Dockerfile
-│
-├── 📁 dbt_transformations      # For my dbt modeling & YAML config files
-│   ├── models
-│   └── dbt_project.yml
-│
-├── 📁 snowflake_ai             # For SQL scripts for calling Cortex LLM and building the data warehouse.
-│   └── setup_and_cortex.sql
-│
-├── 📁 neo4j_fraud_detection    # For Cypher query scripts for the graph database.
-│   └── fraud_network.cypher
-│
-├── 📁 dashboard_assets         # Forsd Power BI files (.pbix) and the high-resolution screenshots you just took.
-│   ├── olist_dashboard.pbix
-│   ├── powerbi_screenshot.png
-│   └── neo4j_starburst.png
-│
-└── 📄 README.md                
-
+![readme structure](https://github.com/user-attachments/assets/1bcb823e-42a4-4953-bacd-1c237a218c79)
+    
 ## 4. Tech Stack Justification
 
 ### Extraction & Orchestration (Python + Docker + Prefect)
