@@ -97,7 +97,7 @@ The data was modeled in dbt using a Kimball-style Star Schema optimized for OLAP
 
 ---
 
-## 8. Hardcore Technical Challenges Overcome
+## 8. Technical Challenges
 * **Jinja Compilation vs. SQL Comments ("Ghost Errors"):** Encountered cryptic dbt compilation failures when documenting the code. Standard SQL comments (`-` or `/* */`) containing Jinja syntax like `{{ ref(...) }}` caused crashes because dbt's Jinja engine parses and evaluates curly braces *before* the SQL engine processes the comments.
     - *Fix:* Enforced a strict codebase standard: transitioned from SQL comments to native Jinja comments `{# ... #}` for any documentation involving macros or references. This successfully isolated developer notes from the compilation engine, preventing "ghost" compilation errors and keeping the compiled SQL payload clean.
 
