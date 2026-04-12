@@ -124,22 +124,22 @@ The data was modeled in dbt using a Kimball-style Star Schema optimized for OLAP
 ```bash
 git clone [https://github.com/YourUsername/olist-supply-chain-ai.git](https://github.com/YourUsername/olist-supply-chain-ai.git)
 cd olist-supply-chain-ai
+```
+**2. Setup Prefect & Docker:**
 
-2. Setup Prefect & Docker:
-
-Bash
+```bash
 # Start local Prefect server
 prefect server start
 
 # Build and run the ingestion containers
 cd data_ingestion
 docker-compose up --build
+```
+**3. Analytical Engineering & Quality Assurance (dbt)**
+> **Business Problem:** Raw data ingestion from S3 is often "dirty" and fragmented, leading to conflicting metrics and executive distrust in reporting.
+> **The Solution:** Implemented a Kimball Star Schema using dbt to transform raw operational data into high-performance analytical assets.
 
-3. Analytical Engineering & Quality Assurance (dbt)
-Business Problem: Raw data ingestion from S3 is often "dirty" and fragmented, leading to conflicting metrics and executive distrust in reporting.
-The Solution: Implemented a Kimball Star Schema using dbt to transform raw operational data into high-performance analytical assets.
-
-Bash
+```bash
 # 1. Building the "Single Source of Truth"
 cd dbt_transformations
 dbt deps
@@ -153,16 +153,22 @@ dbt run --profiles-dir .
 # Implemented 20+ automated schema and business logic tests to ensure that 100% of data 
 # flowing into the Executive Dashboard is verified and compliant with business rules.
 dbt test
-Impact: Reduced manual data reconciliation time by 100% and guaranteed that zero corrupted records reached the final Power BI reporting layer.
+```
 
-4. Proactive Fraud Intelligence (Neo4j)
+* **Impact:** Reduced manual data reconciliation time by **100%** and guaranteed that zero corrupted records reached the final Power BI reporting layer.
 
-Business Problem: AI-driven sentiment systems are vulnerable to "Review Farming" (Sellers hiring bots to flood the system with fake 10-score reviews), which distorts the "High-Risk Watchlist" and protects bad actors.
-The Solution: Deployed Graph-based pattern recognition to detect multi-layered relationships that aggregate SQL cannot identify efficiently.
+**4. Proactive Fraud Intelligence (Neo4j)**
 
-Bash
+> **Business Problem:** AI-driven sentiment systems are vulnerable to "Review Farming" (Sellers hiring bots to flood the system with fake 10-score reviews), which distorts the "High-Risk Watchlist" and protects bad actors.
+> **The Solution:** Deployed Graph-based pattern recognition to detect multi-layered relationships that aggregate SQL cannot identify efficiently.
+
+```bash
 # Uncovering Hidden Syndicates:
 # Executing these queries identifies "Starburst" network topologies where isolated customer 
 # accounts show 100% overlap in perfect review scores targeting a single seller.
-Open Neo4j Browser and execute: olist_supply_chain_ai/neo4j_fraud_detection/fraud_network.cypher
-Impact: Isolated a cluster of high-risk fraudulent sellers, enabling the platform to prevent estimated losses in customer trust and protecting the integrity of the AI-driven recommendation engine.
+
+# Open Neo4j Browser and execute the script:
+# olist_supply_chain_ai/neo4j_fraud_detection/fraud_network.cypher
+```
+
+* **Impact:** Isolated a cluster of high-risk fraudulent sellers, enabling the platform to prevent **estimated losses in customer trust** and protecting the integrity of the AI-driven recommendation engine.
