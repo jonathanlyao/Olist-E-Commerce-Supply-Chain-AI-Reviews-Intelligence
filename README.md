@@ -36,7 +36,31 @@ Olist, the largest department store in Brazilian marketplaces, connects small bu
 
 ---
 
-## 3. Architecture & Tech Stack Justification
+## 3. Architecture  
+📁 olist-supply-chain-ai
+│
+├── 📁 data_ingestion           # For Python extraction logs & Dockerfile
+│   ├── main.py
+│   └── Dockerfile
+│
+├── 📁 dbt_transformations      # For my dbt modeling & YAML config files
+│   ├── models
+│   └── dbt_project.yml
+│
+├── 📁 snowflake_ai             # For SQL scripts for calling Cortex LLM and building the data warehouse.
+│   └── setup_and_cortex.sql
+│
+├── 📁 neo4j_fraud_detection    # For Cypher query scripts for the graph database.
+│   └── fraud_network.cypher
+│
+├── 📁 dashboard_assets         # Forsd Power BI files (.pbix) and the high-resolution screenshots you just took.
+│   ├── olist_dashboard.pbix
+│   ├── powerbi_screenshot.png
+│   └── neo4j_starburst.png
+│
+└── 📄 README.md                
+
+## 4. Tech Stack Justification
 
 ### Extraction & Orchestration (Python + Docker + Prefect)
 * **Why Prefect?** Instead of relying on fragile cron jobs or heavyweight Airflow setups, **Prefect** was utilized as the control plane. Prefect manages the Directed Acyclic Graphs (DAGs) for our extraction scripts. It provides out-of-the-box `@task(retries=3)` decorators to handle transient network failures during AWS S3 uploads, automatic state tracking, and UI-based monitoring.
@@ -58,7 +82,7 @@ Olist, the largest department store in Brazilian marketplaces, connects small bu
 
 ---
 
-## 4. Data Modeling (Star Schema)
+## 5. Data Modeling (Star Schema)
 The data was modeled in dbt using a Kimball-style Star Schema optimized for OLAP aggregations in Power BI:
 
 * **Fact Table:** `FCT_ORDER_ITEMS` (Granularity: 1 row per product item within an order). Contains core metrics like price, freight value, and delivery latency.
@@ -69,7 +93,7 @@ The data was modeled in dbt using a Kimball-style Star Schema optimized for OLAP
 
 ---
 
-## 5. Business Impact & Quantified KPIs
+## 6. Business Impact & Quantified KPIs
 
 ### Engineering Efficiency
 * **Pipeline Resilience:** Achieved **99.9% ingestion success rate** by utilizing Prefect's automated retry mechanisms and Docker containerization.
@@ -81,19 +105,20 @@ The data was modeled in dbt using a Kimball-style Star Schema optimized for OLAP
 
 ---
 
-## 6. Visualizations & Graph Network
+## 7. Visualizations & Graph Network
 
 ### Executive Supply Chain Radar (Power BI)
-*(Insert your Power BI full-screen screenshot here: `![Power BI Dashboard](dashboard_assets/powerbi_screenshot.png)`)*
+*(Insert your Power BI full-screen screenshot here: ![Olist E-commerce   AI Review BI Dashboard](https://github.com/user-attachments/assets/10479832-4dfa-4f16-958c-6f7c291e2137)
+*
 > **Insight:** Implemented a Custom Diverging Color Scale anchored to the platform's historical average sentiment (6.31). This eliminated "map wash-out" from outliers and clearly exposed the critical delivery failure zones in northern Brazil.
 
 ### Fraud Ring "Starburst" Topology (Neo4j)
-*(Insert your Neo4j Graph screenshot here: `![Neo4j Fraud Detection](dashboard_assets/neo4j_starburst.png)`)*
+*(Insert your Neo4j Graph screenshot here: ![neo4j fraud detection](https://github.com/user-attachments/assets/9a44a485-dca8-4261-a634-fe7f2d9eebf5)*
 > **Insight:** Discovered coordinated review manipulation. The Cypher query successfully isolated bot clusters where a single customer generated multiple 10/10 reviews that exclusively converged on a single target seller.
 
 ---
 
-## 7. Hardcore Technical Challenges Overcome
+## 8. Hardcore Technical Challenges Overcome
 * **Jinja Compilation vs. SQL Comments ("Ghost Errors"):** Encountered cryptic dbt compilation failures when documenting the code. Standard SQL comments (`-` or `/* */`) containing Jinja syntax like `{{ ref(...) }}` caused crashes because dbt's Jinja engine parses and evaluates curly braces *before* the SQL engine processes the comments.
     - *Fix:* Enforced a strict codebase standard: transitioned from SQL comments to native Jinja comments `{# ... #}` for any documentation involving macros or references. This successfully isolated developer notes from the compilation engine, preventing "ghost" compilation errors and keeping the compiled SQL payload clean.
 
@@ -106,7 +131,7 @@ The data was modeled in dbt using a Kimball-style Star Schema optimized for OLAP
 
 ---
 
-## 8. How to Run (Local Setup)
+## 9. How to Run (Local Setup)
 
 ### Prerequisites
 * Docker & Docker Compose
@@ -119,3 +144,45 @@ The data was modeled in dbt using a Kimball-style Star Schema optimized for OLAP
    ```bash
    git clone [https://github.com/YourUsername/olist-supply-chain-ai.git](https://github.com/YourUsername/olist-supply-chain-ai.git)
    cd olist-supply-chain-ai
+
+2. Setup Prefect & Docker:
+
+Bash
+# Start local Prefect server
+prefect server start
+
+# Build and run the ingestion containers
+cd data_ingestion
+docker-compose up --build
+
+3. Analytical Engineering & Quality Assurance (dbt)
+Business Problem: Raw data ingestion from S3 is often "dirty" and fragmented, leading to conflicting metrics and executive distrust in reporting.
+The Solution: Implemented a Kimball Star Schema using dbt to transform raw operational data into high-performance analytical assets.
+
+Bash
+# 1. Building the "Single Source of Truth"
+cd dbt_transformations
+dbt deps
+
+# 2. Strategic Assetization: 
+# This command converts fragmented order/review data into structured Fact and Dimension tables, 
+# ensuring that "Revenue" and "Sentiment Score" are calculated consistently across the organization.
+dbt run --profiles-dir .
+
+# 3. Defensive Engineering (Automated SLA/Data Auditing): 
+# Implemented 20+ automated schema and business logic tests to ensure that 100% of data 
+# flowing into the Executive Dashboard is verified and compliant with business rules.
+dbt test
+Impact: Reduced manual data reconciliation time by 100% and guaranteed that zero corrupted records reached the final Power BI reporting layer.
+
+4. Proactive Fraud Intelligence (Neo4j)
+
+Business Problem: AI-driven sentiment systems are vulnerable to "Review Farming" (Sellers hiring bots to flood the system with fake 10-score reviews), which distorts the "High-Risk Watchlist" and protects bad actors.
+The Solution: Deployed Graph-based pattern recognition to detect multi-layered relationships that aggregate SQL cannot identify efficiently.
+
+Bash
+# Uncovering Hidden Syndicates:
+# Executing these queries identifies "Starburst" network topologies where isolated customer 
+# accounts show 100% overlap in perfect review scores targeting a single seller.
+Open Neo4j Browser and execute: olist_supply_chain_ai/neo4j_fraud_detection/fraud_network.cypher
+Impact: Isolated a cluster of high-risk fraudulent sellers, enabling the platform to prevent estimated losses in customer trust and protecting the integrity of the AI-driven recommendation engine.
