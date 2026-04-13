@@ -74,9 +74,9 @@ Olist, the largest department store in Brazilian marketplaces, connects small bu
 │
 ├── 📁 neo4j_graph_analysis    
 │   └── load_graph_data.py
+│   └── neo4j-fraud-detection.cypher
 │
-└── 📁 dashboard_assets         
-    ├── olist_dashboard.pbix
+└── 📁 dashboard_images         
     ├── powerbi_screenshot.png
     └── neo4j_starburst.png
 ```
