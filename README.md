@@ -69,8 +69,9 @@ Olist, the largest department store in Brazilian marketplaces, connects small bu
 │       └── dim_sellers.sql
 │       └── fct_order_items.sql
 │
-├── 📁 snowflake_ai             
+├── 📁 snowflake             
 │   └── Snowflake SQL Queries.sql
+│   └── snowflake_cortex_ai.sql
 │
 ├── 📁 neo4j_graph_analysis    
 │   └── load_graph_data.py
