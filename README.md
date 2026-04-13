@@ -72,10 +72,10 @@ Olist, the largest department store in Brazilian marketplaces, connects small bu
 ├── 📁 snowflake_ai             
 │   └── Snowflake SQL Queries.sql
 │
-├── 📁 neo4j_fraud_detection    
-│   └── fraud_network.cypher
+├── 📁 neo4j_graph_analysis    
+│   └── load_graph_data.py
 │
-├── 📁 dashboard_assets         
+└── 📁 dashboard_assets         
     ├── olist_dashboard.pbix
     ├── powerbi_screenshot.png
     └── neo4j_starburst.png
