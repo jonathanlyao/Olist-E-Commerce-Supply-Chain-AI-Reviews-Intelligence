@@ -37,7 +37,49 @@ Olist, the largest department store in Brazilian marketplaces, connects small bu
 ---
 
 ## 3. Architecture  
-![readme structure](https://github.com/user-attachments/assets/1bcb823e-42a4-4953-bacd-1c237a218c79)
+```
+📁 olist-supply-chain-ai
+│
+├── 📁 data_ingestion           
+│   ├── ingest_raw_data.py
+│   └── docker-compose.yml
+│   └── orchestration.py
+│   └── ingest.py
+│
+├── 📁 dbt_transformations      
+│   └── dbt_project.yml
+│
+├── 📁 models
+│   ├── 📁 staging
+│   │   └── source.yml
+│   │   └── stg_customers.sql
+│   │   └── stg_geolocation.sql
+│   │   └── stg_order_items.sql
+│   │   └── stg_order_payments.sql
+│   │   └── stg_order_reviews.sql
+│   │   └── stg_orders.sql
+│   │   └── stg_product_category_name_translation.sql
+│   │   └── stg_products.sql
+│   │   └── stg_reviews_enriched.sql
+│   │   └── stg_sellers.sql
+│   └── 📁 marts
+│       └── dim_customers.sql
+│       └── dim_products.sql
+│       └── dim_reviews_enriched.sql
+│       └── dim_sellers.sql
+│       └── fct_order_items.sql
+│
+├── 📁 snowflake_ai             
+│   └── Snowflake SQL Queries.sql
+│
+├── 📁 neo4j_fraud_detection    
+│   └── fraud_network.cypher
+│
+├── 📁 dashboard_assets         
+    ├── olist_dashboard.pbix
+    ├── powerbi_screenshot.png
+    └── neo4j_starburst.png
+```
     
 ## 4. Tech Stack Justification
 
